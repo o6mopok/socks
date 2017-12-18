@@ -4,7 +4,7 @@ var TEST_PAGE_URL = 'https://jungle-socks.herokuapp.com';
 var EXPECTED_PAGE_TITLE = 'JungleSocks'
 var EXPECTED_PAGE_HEADER = 'Welcome To Jungle Socks!'
 
-var STATES_TO_TEST = ['CA','NY','MN']
+var STATES_TO_TEST = require('./states')
 
 var ITEMS = [
     {   
