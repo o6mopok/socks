@@ -25,6 +25,7 @@ var ITEMS = [
     }
 ]
 
+
 function getSubtotal(items) {
     var subtotal = 0
     items.forEach(function(item) {
@@ -61,35 +62,38 @@ function getFloatFromCurrency(str){
 }
 
 function testTotalPriceByState(subtotal,state) {
-    browser.url(TEST_PAGE_URL);
-    ITEMS.forEach(function(item){
-        browser.setValue('#line_item_quantity_'+item.name,1)        
-    })
-    browser.selectByValue('select[name="state"]',state)
-    browser.submitForm('form[action="/checkout/create"]');
-    browser.waitUntil(function () {
-        return (browser.getUrl().indexOf('/checkout/create')>0)
-    },WAIT_TIME)
-    assert.equal(getFloatFromCurrency(browser.getText("#subtotal")), subtotal);  
-    var calculatedExpectedTaxAmount = calculateExpectedTax(subtotal,state)
-    assert.equal(getFloatFromCurrency(browser.getText("#taxes")), calculatedExpectedTaxAmount);
-    var calculatedExpectedTotal = calculateExpectedTotal(subtotal,state)
-    assert.equal(getFloatFromCurrency(browser.getText("#total")), calculatedExpectedTotal);
+    describe('JungleSocks Prices', function() {
+        it('should calculate the right tax for state - '+state, function () {
 
+            browser.url(TEST_PAGE_URL);
+            ITEMS.forEach(function(item){
+                browser.setValue('#line_item_quantity_'+item.name,1)        
+            })
+            browser.selectByValue('select[name="state"]',state)
+            browser.submitForm('form[action="/checkout/create"]');
+            browser.waitUntil(function () {
+                return (browser.getUrl().indexOf('/checkout/create')>0)
+            },WAIT_TIME)
+            assert.equal(getFloatFromCurrency(browser.getText("#subtotal")), subtotal);  
+            var calculatedExpectedTaxAmount = calculateExpectedTax(subtotal,state)
+            assert.equal(getFloatFromCurrency(browser.getText("#taxes")), calculatedExpectedTaxAmount);
+            var calculatedExpectedTotal = calculateExpectedTotal(subtotal,state)
+            assert.equal(getFloatFromCurrency(browser.getText("#total")), calculatedExpectedTotal);
+
+        });
+    });
 }
 
 before(function(){
     console.log('==== BEFORE')
 });
 
-describe('JungleSocks Prices', function() {
-    it('should calculate the right tax for states - ', function () {
-        var subtotal = getSubtotal(ITEMS)
-        STATES_TO_TEST.forEach(function(state){
-            testTotalPriceByState(subtotal,state)            
-        })
-    });
-});
+describe('JungleSocks Prices for various states', function() {
+    var subtotal = getSubtotal(ITEMS)
+    STATES_TO_TEST.forEach(function(state){
+        testTotalPriceByState(subtotal,state)            
+    })
+})
 
 after(function(){
     console.log('==== DONE!')
