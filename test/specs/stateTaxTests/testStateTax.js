@@ -1,6 +1,6 @@
 var assert = require('assert');
-var WAIT_TIME = 3000
-var TEST_PAGE_URL = 'https://jungle-socks.herokuapp.com/';
+var WAIT_TIME = 10000
+var TEST_PAGE_URL = 'https://jungle-socks.herokuapp.com';
 var EXPECTED_PAGE_TITLE = 'JungleSocks'
 var EXPECTED_PAGE_HEADER = 'Welcome To Jungle Socks!'
 
@@ -46,10 +46,6 @@ function getStateTax(state) {
     }
 }
 
-function getExpectedSubtotal(subtotal) {
-    return Math.round((subtotal)*100)/100
-}
-
 function calculateExpectedTax(subtotal, state) {
     var tax = getStateTax(state)
     return Math.round((subtotal * tax)*100)/100
@@ -66,10 +62,6 @@ function getFloatFromCurrency(str){
 
 function testTotalPriceByState(subtotal,state) {
     browser.url(TEST_PAGE_URL);
-    browser.waitUntil(function () {
-        return (browser.getUrl().indexOf(TEST_PAGE_URL)>-1)
-    },WAIT_TIME)
-
     ITEMS.forEach(function(item){
         browser.setValue('#line_item_quantity_'+item.name,1)        
     })
@@ -78,8 +70,7 @@ function testTotalPriceByState(subtotal,state) {
     browser.waitUntil(function () {
         return (browser.getUrl().indexOf('/checkout/create')>0)
     },WAIT_TIME)
-    var expectedSubtotal = getExpectedSubtotal(subtotal)
-    assert.equal(getFloatFromCurrency(browser.getText("#subtotal")), expectedSubtotal);  
+    assert.equal(getFloatFromCurrency(browser.getText("#subtotal")), subtotal);  
     var calculatedExpectedTaxAmount = calculateExpectedTax(subtotal,state)
     assert.equal(getFloatFromCurrency(browser.getText("#taxes")), calculatedExpectedTaxAmount);
     var calculatedExpectedTotal = calculateExpectedTotal(subtotal,state)
