@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/wdio wdio.conf.js"
+    "test": "./node_modules/.bin/wdio wdio.conf.js",
+    "selenuim": "java -jar -Dwebdriver.gecko.driver=./geckodriver ./node_modules/selenium-server-standalone-jar/jar/selenium-server-standalone-3.8.1.jar"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {},
   "devDependencies": {
+    "selenium-server-standalone-jar": "^3.8.1",
     "wdio-mocha-framework": "^0.5.12",
     "webdriverio": "^4.9.11"
   }
