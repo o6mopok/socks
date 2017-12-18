@@ -1,9 +1,9 @@
 # JungleSocks tests
 
-## Prerequisites
+## Prerequisites:
 Node.js and Java already installed. First we need to to start a selenium server that executes all selenium commands within the browser. To do so create a test folder:
 
-## Setup
+## Setup:
 
  1. Create a simple test folder 
  2. Download latest selenium standalone server
@@ -16,12 +16,12 @@ $ java -jar -Dwebdriver.gecko.driver=./geckodriver selenium-server-standalone-3.
 ```
 npm install webdriverio
 ```
-## Run
+## Run:
 Start Selenium:
 ```
 npm run selenium
 ```
-Run Tests
+Run Tests:
 ```
 npm test
 ```
