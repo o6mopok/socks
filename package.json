@@ -1,0 +1,16 @@
+{
+  "name": "junglesocks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/wdio wdio.conf.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "wdio-mocha-framework": "^0.5.12",
+    "webdriverio": "^4.9.11"
+  }
+}
